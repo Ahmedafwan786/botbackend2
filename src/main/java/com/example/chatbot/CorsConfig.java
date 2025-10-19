@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // All endpoints
-                        .allowedOrigins("https://ahmedafwan786.github.io/botfrontened/") // Frontend URL
+                        .allowedOrigins("https://silly-concha-e37448.netlify.app/") // Frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
