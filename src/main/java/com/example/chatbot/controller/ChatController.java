@@ -5,18 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+@RequestMapping("/chat")
 public class ChatController {
 
     @Autowired
     private NLPService nlpService;
 
-    @PostMapping("/chat")
+    @PostMapping
     public ChatResponse chat(@RequestBody ChatRequest request) {
         String reply = nlpService.generateResponse(request.getMessage());
         return new ChatResponse(reply);
     }
 
+    // DTO classes
     public static class ChatRequest {
         private String message;
         public ChatRequest() {}
