@@ -34,7 +34,7 @@ public class NLPService {
                 Files.createDirectories(modelDirPath);
             }
 
-            // If model file exists on filesystem, load it. Else train from bundled training.txt.
+            // If model file exists, load it. Else train from training.txt.
             File modelFile = new File(MODEL_FILE);
             if (modelFile.exists()) {
                 try (InputStream modelIn = new FileInputStream(modelFile)) {
@@ -48,6 +48,7 @@ public class NLPService {
                     if (dataIn == null) {
                         throw new FileNotFoundException("training.txt not found in resources");
                     }
+
                     ObjectStream<String> lineStream = new PlainTextByLineStream(() -> dataIn, StandardCharsets.UTF_8);
                     ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
 
@@ -56,10 +57,12 @@ public class NLPService {
                     params.put(TrainingParameters.CUTOFF_PARAM, "1");
 
                     DoccatModel model = DocumentCategorizerME.train("en", sampleStream, params, new DoccatFactory());
-                    // persist model to disk
+
+                    // Persist model to disk
                     try (OutputStream modelOut = new BufferedOutputStream(new FileOutputStream(MODEL_FILE))) {
                         model.serialize(modelOut);
                     }
+
                     categorizer = new DocumentCategorizerME(model);
                     System.out.println("Training complete. Saved model to " + MODEL_FILE);
                 }
@@ -73,7 +76,10 @@ public class NLPService {
         if (userInput == null || userInput.trim().isEmpty()) {
             return "Please say something so I can help.";
         }
-        double[] outcomes = categorizer.categorize(userInput);
+
+        // Tokenize user input before categorization
+        String[] tokens = userInput.split("\\s+");
+        double[] outcomes = categorizer.categorize(tokens);
         String category = categorizer.getBestCategory(outcomes);
 
         switch (category) {
