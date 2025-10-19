@@ -1,0 +1,39 @@
+greeting hello
+greeting hi
+greeting hey there
+greeting good morning
+greeting good afternoon
+greeting good evening
+greeting how are you
+thanks thank you
+thanks thanks a lot
+thanks appreciate it
+goodbye bye
+goodbye goodbye
+goodbye see you later
+goodbye talk to you later
+symptom i have a headache
+symptom i have a fever
+symptom my stomach hurts
+symptom i feel dizzy
+symptom i have chest pain
+symptom i am coughing a lot
+symptom i have a sore throat
+symptom i feel nauseous
+symptom i have shortness of breath
+symptom my back hurts
+medication what medicine should i take
+medication can i take ibuprofen
+medication what is best for fever
+advice should i visit a doctor
+advice when should i see a doctor
+advice is this serious
+advice how to treat a fever at home
+appointment i want to book an appointment
+appointment can i see a doctor
+insurance do you accept insurance
+insurance how does billing work
+insurance do you accept medicaid
+info what are your opening hours
+info where are you located
+info how can i contact support
