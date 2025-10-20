@@ -18,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class NLPService {
@@ -136,7 +138,9 @@ public class NLPService {
         String[] tokens = tokenizer.tokenize(lowerInput);
         double[] outcomes = categorizer.categorize(tokens);
         String category = categorizer.getBestCategory(outcomes);
-        double confidence = categorizer.getBestCategoryProb(outcomes);
+        // Fixed: Get probability of best category
+        Map<String, Double> allResults = categorizer.getAllResults(outcomes);
+        double confidence = allResults.getOrDefault(category, 0.0);
 
         System.out.println("Input: " + userInput + " | Category: " + category + " | Confidence: " + confidence);
 
@@ -197,12 +201,22 @@ public class NLPService {
     // Keyword-based symptom detection (expanded)
     private List<String> detectSymptomsKeywords(String input) {
         List<String> symptoms = new ArrayList<>();
-        Map<String, String> symptomMap = Map.of(
-            "fever", "fever", "headache", "headache", "cough", "cough", "stomach", "nausea",
-            "nauseous", "nausea", "dizzy", "dizziness", "sore throat", "sore throat",
-            "back pain", "back pain", "shortness of breath", "shortness of breath",
-            "chest pain", "chest pain", "fatigue", "fatigue", "body aches", "body aches",
-            "runny nose", "runny nose", "joint pain", "joint pain"
+        // Fixed: Use Map.ofEntries() for more than 10 pairs
+        Map<String, String> symptomMap = Map.ofEntries(
+            Map.entry("fever", "fever"),
+            Map.entry("headache", "headache"),
+            Map.entry("cough", "cough"),
+            Map.entry("stomach", "nausea"),
+            Map.entry("nauseous", "nausea"),
+            Map.entry("dizzy", "dizziness"),
+            Map.entry("sore throat", "sore throat"),
+            Map.entry("back pain", "back pain"),
+            Map.entry("shortness of breath", "shortness of breath"),
+            Map.entry("chest pain", "chest pain"),
+            Map.entry("fatigue", "fatigue"),
+            Map.entry("body aches", "body aches"),
+            Map.entry("runny nose", "runny nose"),
+            Map.entry("joint pain", "joint pain")
         );
         for (Map.Entry<String, String> entry : symptomMap.entrySet()) {
             if (input.contains(entry.getKey())) symptoms.add(entry.getValue());
@@ -217,7 +231,6 @@ public class NLPService {
 
     // Parsing and advice methods (same as before, with added symptoms)
     private ParsedDetails parseSymptomDetails(String input) {
-        // ... (same as previous version)
         int days = -1;
         String severity = "mild";
         boolean escalating = false;
@@ -245,7 +258,6 @@ public class NLPService {
     }
 
     private String getSymptomAdvice(String symptom, ParsedDetails details) {
-        // ... (same as before, with added cases)
         String symptomDisplay = symptom.replace("_", " ");
         String baseAdvice = "";
         if ("severe".equals(details.severity) || details.days >= 3 || details.escalating) {
