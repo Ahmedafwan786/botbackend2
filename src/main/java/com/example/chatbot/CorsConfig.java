@@ -13,8 +13,8 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // All endpoints
-                        .allowedOrigins("https://ahmedafwan786.github.io/botfrontened") // Frontend URL
+                registry.addMapping("/**")
+                        .allowedOrigins("https://ahmedafwan786.github.io")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
