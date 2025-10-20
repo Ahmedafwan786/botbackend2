@@ -1,4 +1,4 @@
-package com.example.chatbot.service;
+apackage com.example.chatbot.service;
 
 import opennlp.tools.doccat.*;
 import opennlp.tools.namefind.NameFinderME;
@@ -138,9 +138,8 @@ public class NLPService {
         String[] tokens = tokenizer.tokenize(lowerInput);
         double[] outcomes = categorizer.categorize(tokens);
         String category = categorizer.getBestCategory(outcomes);
-        // Fixed: Get probability of best category
-        Map<String, Double> allResults = categorizer.getAllResults(outcomes);
-        double confidence = allResults.getOrDefault(category, 0.0);
+        // Fixed: Get confidence as the max probability from outcomes array
+        double confidence = Arrays.stream(outcomes).max().orElse(0.0);
 
         System.out.println("Input: " + userInput + " | Category: " + category + " | Confidence: " + confidence);
 
