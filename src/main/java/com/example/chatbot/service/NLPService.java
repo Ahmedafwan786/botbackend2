@@ -131,25 +131,38 @@ public class NLPService {
         String[] tokens = (tokenizer != null) ? tokenizer.tokenize(lowerInput) : lowerInput.split("\\s+");
 
         String state = userStates.getOrDefault(userId, "none");
+        
+    // Handle waiting states for symptom details
+   if (state.startsWith("waiting_for_")) {
+       String[] parts = state.split("_");
+       if (parts.length >= 5) {  // Ensure the state has enough parts
+           String symptom = parts[2];  // e.g., "fever"
+           int retry = 1;  // Default retry count
+           try {
+               retry = Integer.parseInt(parts[4]);  // parts[4] is the retry number (e.g., "1")
+           } catch (NumberFormatException e) {
+               System.err.println("Invalid retry count in state: " + state + ". Resetting to default.");
+               retry = 1;
+           }
 
-        // Handle waiting states for symptom details
-        if (state.startsWith("waiting_for_")) {
-            String[] parts = state.split("_");
-            String symptom = parts[2];
-            int retry = Integer.parseInt(parts[3]);
-
-            ParsedDetails details = parseSymptomDetails(lowerInput);
-            if (details.days >= 0) {  // Allow 0 for "morning" or "today"
-                userStates.put(userId, "none");
-                return getSymptomAdvice(symptom, details);
-            } else if (retry < 2) {
-                userStates.put(userId, "waiting_for_" + symptom + "_details_" + (retry + 1));
-                return "I didn't catch that. Please tell me how many days you've had the " + symptom.replace("_", " ") + " (e.g., '3 days', 'yesterday', 'today', or 'morning'). Is it mild or severe?";
-            } else {
-                userStates.put(userId, "none");
-                return "I'm having trouble understanding. For now, rest and monitor your symptoms. If they persist, see a doctor.";
-            }
-        }
+           ParsedDetails details = parseSymptomDetails(lowerInput);
+           if (details.days >= 0) {
+               userStates.put(userId, "none");
+               return getSymptomAdvice(symptom, details);
+           } else if (retry < 2) {
+               userStates.put(userId, "waiting_for_" + symptom.replace(" ", "_") + "_details_" + (retry + 1));
+               return "I didn't catch that. Please tell me how many days you've had the " + symptom.replace("_", " ") + " (e.g., '3 days', 'yesterday', 'today', or 'morning'). Is it mild or severe?";
+           } else {
+               userStates.put(userId, "none");
+               return "I'm having trouble understanding. For now, rest and monitor your symptoms. If they persist, see a doctor.";
+           }
+       } else {
+           // Malformed state, reset to avoid loops
+           userStates.put(userId, "none");
+           return "Sorry, I lost track. Can you tell me about your symptoms again?";
+       }
+   }
+   
 
         // Classify input if categorizer is available
         String category = "unknown";
