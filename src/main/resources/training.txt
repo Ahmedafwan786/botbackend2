@@ -5,13 +5,23 @@ greeting good morning
 greeting good afternoon
 greeting good evening
 greeting how are you
+greeting what's up
+greeting hello there
+greeting hi doctor
+greeting hey
 thanks thank you
 thanks thanks a lot
 thanks appreciate it
+thanks thanks so much
+thanks i appreciate your help
+thanks cheers
 goodbye bye
 goodbye goodbye
 goodbye see you later
 goodbye talk to you later
+goodbye have a good day
+goodbye bye bye
+goodbye take care
 symptom i have a headache
 symptom i have a fever
 symptom my stomach hurts
@@ -22,18 +32,58 @@ symptom i have a sore throat
 symptom i feel nauseous
 symptom i have shortness of breath
 symptom my back hurts
+symptom i'm not feeling well
+symptom i have body aches
+symptom i have a bad headache for 2 days
+symptom my fever is severe for 3 days
+symptom stomach pain for 1 day
+symptom dizziness and nausea
+symptom coughing for a week
+symptom sore throat for 4 days
+symptom back pain since yesterday
+symptom shortness of breath and chest pain
+symptom nausea getting worse
+symptom headache and fever for 5 days
+symptom severe cough for 2 days
+symptom i feel fatigued
+symptom body aches all over
+symptom runny nose for 3 days
+symptom joint pain in my knees
+symptom fatigue and headache
+symptom body aches for a week
 medication what medicine should i take
 medication can i take ibuprofen
 medication what is best for fever
+medication do you recommend aspirin
+medication what painkiller can i use
+medication medicine for headache
+medication what to take for cough
+medication remedies for sore throat
+medication for fatigue
 advice should i visit a doctor
 advice when should i see a doctor
 advice is this serious
 advice how to treat a fever at home
+advice what should i do if i have a cold
+advice rest and drink fluids
+advice advice for stomach pain
+advice how to handle dizziness
+advice tips for back pain
+advice managing fatigue
 appointment i want to book an appointment
 appointment can i see a doctor
+appointment schedule a visit
+appointment make an appointment
+appointment book a checkup
 insurance do you accept insurance
 insurance how does billing work
 insurance do you accept medicaid
+insurance what insurance do you take
+insurance billing questions
+insurance insurance coverage
 info what are your opening hours
 info where are you located
 info how can i contact support
+info what is your address
+info phone number
+info contact info
