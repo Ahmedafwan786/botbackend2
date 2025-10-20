@@ -1,4 +1,4 @@
-apackage com.example.chatbot.service;
+package com.example.chatbot.service;
 
 import opennlp.tools.doccat.*;
 import opennlp.tools.namefind.NameFinderME;
